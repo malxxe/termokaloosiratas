@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="et">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loosiratas</title>
+    <style>
+        body { text-align: center; font-family: Arial, sans-serif; }
+        #wheel-container { position: relative; width: 300px; margin: auto; display: none; }
+        #wheel { width: 100%; transition: transform 3s ease-out; }
+        #spin { margin-top: 20px; padding: 10px 20px; font-size: 16px; cursor: pointer; display: none; }
+        #email-section { margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+
+    <h1>Osale loosimises!</h1>
+    
+    <div id="email-section">
+        <p>Sisesta oma e-mail:</p>
+        <input type="email" id="email" placeholder="Sinu e-mail" required>
+        <br><br>
+        <input type="checkbox" id="consent"> Soovin saada uudiskirju ja pakkumisi
+        <br><br>
+        <button id="submit-email">Kinnita ja alusta</button>
+    </div>
+
+    <div id="wheel-container">
+        <h2>Keeruta loosiratast!</h2>
+        <img id="wheel" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8f/Roulette_wheel.svg/800px-Roulette_wheel.svg.png" alt="Loosiratas">
+        <button id="spin">Keeruta!</button>
+    </div>
+    
+    <p id="result"></p>
+
+    <script>
+        const prizes = ["Võit!", "Järgmine kord veab!", "Võit!", "Järgmine kord veab!", "Peaauhind!"];
+        let spinning = false;
+
+        document.getElementById("submit-email").addEventListener("click", function() {
+            const email = document.getElementById("email").value;
+            const consent = document.getElementById("consent").checked;
+
+            if (!email.includes("@")) {
+                alert("Palun sisesta korrektne e-mail.");
+                return;
+            }
+
+            console.log("Sisestatud e-mail:", email);
+            console.log("Uudiskirjaga liitumine:", consent ? "Jah" : "Ei");
+
+            document.getElementById("email-section").style.display = "none";
+            document.getElementById("wheel-container").style.display = "block";
+            document.getElementById("spin").style.display = "block";
+        });
+
+        document.getElementById("spin").addEventListener("click", function() {
+            if (spinning) return;
+            spinning = true;
+
+            const wheel = document.getElementById("wheel");
+            const randomDegree = 1800 + Math.floor(Math.random() * 360);
+            wheel.style.transform = `rotate(${randomDegree}deg)`;
+
+            setTimeout(() => {
+                const result = prizes[Math.floor(Math.random() * prizes.length)];
+                document.getElementById("result").innerText = "Tulemus: " + result;
+                spinning = false;
+            }, 3000);
+        });
+    </script>
+
+</body>
+</html>
