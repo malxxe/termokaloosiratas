@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="et">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loosiratas</title>
+    <style>
+        body { text-align: center; font-family: Arial, sans-serif; }
+        #wheel-container { position: relative; width: 300px; margin: auto; }
+        #wheel { width: 100%; transition: transform 3s ease-out; }
+        #spin { margin-top: 20px; padding: 10px 20px; font-size: 16px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h1>Keeruta loosiratast!</h1>
+    <div id="wheel-container">
+        <img id="wheel" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8f/Roulette_wheel.svg/800px-Roulette_wheel.svg.png" alt="Loosiratas">
+    </div>
+    <button id="spin">Keeruta!</button>
+    <p id="result"></p>
+
+    <script>
+        const prizes = ["Võit!", "Järgmine kord veab!", "Võit!", "Järgmine kord veab!", "Peaauhind!"];
+        let spinning = false;
+        
+        document.getElementById("spin").addEventListener("click", function() {
+            if (spinning) return;
+            spinning = true;
+            
+            const wheel = document.getElementById("wheel");
+            const randomDegree = 1800 + Math.floor(Math.random() * 360);
+            wheel.style.transform = `rotate(${randomDegree}deg)`;
+            
+            setTimeout(() => {
+                const result = prizes[Math.floor(Math.random() * prizes.length)];
+                document.getElementById("result").innerText = "Tulemus: " + result;
+                spinning = false;
+            }, 3000);
+        });
+    </script>
+</body>
+</html>
